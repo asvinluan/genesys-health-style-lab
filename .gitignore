@@ -1,0 +1,28 @@
+# Terraform / OpenTofu
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+terraform/backend.tf
+*.auto.tfvars
+secrets.tfvars
+# The lock file IS committed (pins provider hashes). Do not ignore .terraform.lock.hcl.
+
+# CX as Code exports can hold real IDs. Review by hand first.
+export/
+
+# Secrets and local config
+.env
+.env.*
+*.pem
+*.key
+
+# Node
+node_modules/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

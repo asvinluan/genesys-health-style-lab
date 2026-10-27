@@ -1,0 +1,77 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: Terraform fmt, validate, lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+      - name: Format check
+        run: terraform fmt -check -recursive
+        working-directory: terraform
+      - name: Init (no backend, no credentials)
+        run: terraform init -backend=false -input=false
+        working-directory: terraform
+      - name: Validate
+        run: terraform validate
+        working-directory: terraform
+      - name: Offline plan test (provider mocked, no org needed)
+        run: terraform test
+        working-directory: terraform
+      - uses: terraform-linters/setup-tflint@v4
+      - name: TFLint
+        run: |
+          tflint --init
+          tflint --recursive
+        working-directory: terraform
+
+  function:
+    name: Function tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test
+        working-directory: terraform/function-actions/normalise-reference
+
+  scripts:
+    name: ShellCheck and PowerShell parse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ShellCheck
+        run: shellcheck -x scripts/bash/*.sh
+      - name: PowerShell parse and analyse
+        shell: pwsh
+        run: |
+          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser
+          $bad = 0
+          Get-ChildItem scripts/powershell -Filter *.ps1 | ForEach-Object {
+            $t = $null; $e = $null
+            [void][System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$t, [ref]$e)
+            if ($e.Count) { $bad++; $e | ForEach-Object { Write-Error "$($_.Extent.File):$($_.Extent.StartLineNumber) $($_.Message)" } }
+          }
+          $issues = Invoke-ScriptAnalyzer -Path scripts/powershell -Severity Error
+          if ($issues) { $issues | Format-Table -AutoSize; $bad++ }
+          if ($bad) { exit 1 }
+
+  repo-checks:
+    name: Repo checks (secrets, numbers, flows)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyyaml python-hcl2
+      - run: python3 tools/check_repo.py

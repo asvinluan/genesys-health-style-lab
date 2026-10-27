@@ -1,0 +1,18 @@
+inboundCall:
+  name: "{{flow_name}}"
+  description: Public holiday message for the aged care and providers lines.
+  division: "{{division_name}}"
+  defaultLanguage: en-au
+  startUpRef: ./menus/menu[mainMenu]
+  initialGreeting:
+    tts: Thank you for calling. We are closed today for a public holiday.
+  menus:
+    - menu:
+        name: Holiday Message
+        audio:
+          tts: We will reopen on the next business day. If this is an emergency, call triple zero. For emotional support, call Lifeline on 13 11 14. Press 9 to end this call.
+        refId: mainMenu
+        choices:
+          - menuDisconnect:
+              name: Disconnect
+              dtmf: digit_9

@@ -1,0 +1,30 @@
+inboundCall:
+  name: "{{flow_name}}"
+  description: Public health information line, 24 hours. Information only.
+  division: "{{division_name}}"
+  defaultLanguage: en-au
+  startUpRef: ./menus/menu[mainMenu]
+  initialGreeting:
+    tts: Thank you for calling the public health information line. This service gives general information. It does not give medical advice. If this is an emergency, hang up and call triple zero.
+  menus:
+    - menu:
+        name: Public Health Menu
+        audio:
+          tts: For public health information, press 1. For help in another language, press 2. To end this call, press 9.
+        refId: mainMenu
+        choices:
+          - menuTransferToAcd:
+              name: Public health information
+              dtmf: digit_1
+              targetQueue:
+                lit:
+                  name: "{{queue_public_health_information}}"
+          - menuTransferToAcd:
+              name: Interpreter or relay
+              dtmf: digit_2
+              targetQueue:
+                lit:
+                  name: "{{queue_accessibility_and_interpreter}}"
+          - menuDisconnect:
+              name: Disconnect
+              dtmf: digit_9

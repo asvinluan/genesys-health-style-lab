@@ -1,0 +1,22 @@
+workflow:
+  name: "{{flow_name}}"
+  description: Scaffold. Runs when a contact ends. Does nothing yet. Add a data action here to post the outcome to the case system.
+  division: "{{division_name}}"
+  startUpRef: "/workflow/states/state[Initial State_10]"
+  defaultLanguage: en-us
+  supportedLanguages:
+    en-us:
+      none: true
+  settingsErrorHandling:
+    errorHandling:
+      endWorkflow:
+        none: true
+  states:
+    - state:
+        name: Initial State
+        refId: Initial State_10
+        actions:
+          - endWorkflow:
+              name: End Workflow
+              exitReason:
+                noValue: true

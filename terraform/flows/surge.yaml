@@ -1,0 +1,33 @@
+inboundCall:
+  name: "{{flow_name}}"
+  description: Public health event flow. Used by the surge switch and the event information line.
+  division: "{{division_name}}"
+  defaultLanguage: en-au
+  startUpRef: ./menus/menu[mainMenu]
+  initialGreeting:
+    tts: We are responding to a public health event and wait times are longer than usual. If this is an emergency, call triple zero.
+  menus:
+    - menu:
+        name: Event Menu
+        audio:
+          tts: For event information, press 1. For help in another language, press 2. If you are a carer or worried about someone's safety, press 3.
+        refId: mainMenu
+        choices:
+          - menuTransferToAcd:
+              name: Event information
+              dtmf: digit_1
+              targetQueue:
+                lit:
+                  name: "{{queue_surge_response}}"
+          - menuTransferToAcd:
+              name: Interpreter or relay
+              dtmf: digit_2
+              targetQueue:
+                lit:
+                  name: "{{queue_accessibility_and_interpreter}}"
+          - menuTransferToAcd:
+              name: Carer or safety concern
+              dtmf: digit_3
+              targetQueue:
+                lit:
+                  name: "{{queue_carers_and_complex_needs}}"

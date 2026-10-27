@@ -1,0 +1,45 @@
+inboundCall:
+  name: "{{flow_name}}"
+  description: Aged care information line, extended hours. Information only. No clinical advice.
+  division: "{{division_name}}"
+  defaultLanguage: en-au
+  startUpRef: ./menus/menu[mainMenu]
+  initialGreeting:
+    tts: Thank you for calling the aged care information line. This call may be recorded for quality and training. This service gives general information. It does not give medical advice. If this is an emergency, hang up and call triple zero.
+  menus:
+    - menu:
+        name: Aged Care Menu
+        audio:
+          tts: For information about aged care services, press 1. If you are a carer or the situation is complex, press 2. If you need an interpreter or a relay service, press 3. To make a complaint or give feedback, press 4. If you are worried about the safety of an older person, press 5.
+        refId: mainMenu
+        choices:
+          - menuTransferToAcd:
+              name: Aged care information
+              dtmf: digit_1
+              targetQueue:
+                lit:
+                  name: "{{queue_aged_care_information}}"
+          - menuTransferToAcd:
+              name: Carers and complex needs
+              dtmf: digit_2
+              targetQueue:
+                lit:
+                  name: "{{queue_carers_and_complex_needs}}"
+          - menuTransferToAcd:
+              name: Interpreter or relay
+              dtmf: digit_3
+              targetQueue:
+                lit:
+                  name: "{{queue_accessibility_and_interpreter}}"
+          - menuTransferToAcd:
+              name: Complaints and feedback
+              dtmf: digit_4
+              targetQueue:
+                lit:
+                  name: "{{queue_complaints_and_feedback}}"
+          - menuTransferToAcd:
+              name: Safety concern
+              dtmf: digit_5
+              targetQueue:
+                lit:
+                  name: "{{queue_urgent_clinical_referral}}"

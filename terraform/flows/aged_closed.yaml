@@ -1,0 +1,18 @@
+inboundCall:
+  name: "{{flow_name}}"
+  description: Aged care line, outside hours. Message only.
+  division: "{{division_name}}"
+  defaultLanguage: en-au
+  startUpRef: ./menus/menu[mainMenu]
+  initialGreeting:
+    tts: Thank you for calling the aged care information line. We are closed.
+  menus:
+    - menu:
+        name: Closed Message
+        audio:
+          tts: We are open Monday to Friday, 8am to 8pm, and Saturday, 10am to 2pm, Melbourne time. If this is an emergency, call triple zero. For emotional support, call Lifeline on 13 11 14. Press 9 to end this call.
+        refId: mainMenu
+        choices:
+          - menuDisconnect:
+              name: Disconnect
+              dtmf: digit_9

@@ -1,0 +1,5 @@
+# Used by `shellcheck -x scripts/bash/*.sh` (locally and in CI).
+external-sources=true
+source-path=SCRIPTDIR
+# SC2164 (cd without || exit): every script sources lib.sh, which sets `set -euo pipefail`, so a failed cd stops the script.
+disable=SC2164

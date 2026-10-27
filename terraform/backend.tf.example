@@ -1,0 +1,12 @@
+# Copy to backend.tf to keep state in S3 with locking, as in the AWS lab.
+# State holds every ID in the org and any secret you passed in. Treat it like a password file.
+# Never commit state. Never commit backend.tf with real names.
+terraform {
+  backend "s3" {
+    bucket         = "REPLACE-with-your-state-bucket"
+    key            = "genesys-enterprise-insurance-lab/terraform.tfstate"
+    region         = "ap-southeast-2"
+    dynamodb_table = "REPLACE-with-your-lock-table"
+    encrypt        = true
+  }
+}
