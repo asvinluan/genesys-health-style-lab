@@ -1,10 +1,10 @@
 # genesys-health-style-lab
 
-A design-and-code study: a public contact centre in the style of a department like **Department of Health**, built on **Genesys Cloud CX** as Terraform ("CX as Code"), with AI guardrails, a restricted division, separation of duties, quality, recording retention, workforce management, a governance pack and documentation written for review and interview.
+A design-and-code study of a public-sector health-service contact centre, built on **Genesys Cloud CX** as Terraform ("CX as Code"). It covers AI guardrails, a restricted division, separation of duties, quality management, recording retention, workforce management and a governance pack, with documentation written for review.
 
 It is the Genesys counterpart to my [AWS enterprise bank lab](https://github.com/asvinluan/aws-enterprise-bank-lab), and a sibling of [genesys-home-affairs-style-lab](https://github.com/asvinluan/genesys-home-affairs-style-lab): the same modules, a different design file.
 
-> **Status: lab and design.** The Terraform passes `validate` against the real `mypurecloud/genesyscloud` provider schema (v1.87.1) and an **offline plan test** with the provider mocked (4 scenarios). It has **not been applied to a live org**, and the flow YAML has **not** been checked with Archy. The code was drafted with AI assistance and reviewed by me. This is **not** the real department, not a production system and not a claim of production experience. Public information only. See [what is not built](docs/BUILD-MANUAL.md#part-14-what-is-not-built-yet).
+> **Status: lab and design.** The Terraform passes `validate` against the real `mypurecloud/genesyscloud` provider schema (v1.87.1) and an **offline plan test** with the provider mocked (4 scenarios). It has **not been applied to a live org**, and the flow YAML has **not** been checked with Archy. The code was drafted with AI assistance and reviewed by me. This is **not** a real organisation, not a production system and not a claim of production experience. Public information only. See [what is not built](docs/BUILD-MANUAL.md#part-14-what-is-not-built-yet).
 
 ## What it models
 
