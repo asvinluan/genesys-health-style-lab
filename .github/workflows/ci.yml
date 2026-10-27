@@ -57,15 +57,26 @@ jobs:
       - name: PowerShell parse and analyse
         shell: pwsh
         run: |
-          Install-Module PSScriptAnalyzer -Force -Scope CurrentUser
+          # The parse check below is the one that matters. The analyser is a bonus: if the
+          # PowerShell Gallery cannot be reached, say so and carry on instead of failing the build.
+          $haveAnalyzer = [bool](Get-Module -ListAvailable PSScriptAnalyzer)
+          if (-not $haveAnalyzer) {
+            try {
+              Set-PSRepository -Name PSGallery -InstallationPolicy Trusted -ErrorAction SilentlyContinue
+              Install-Module PSScriptAnalyzer -Force -Scope CurrentUser -Repository PSGallery -ErrorAction Stop
+              $haveAnalyzer = $true
+            } catch { Write-Host "::warning::PSScriptAnalyzer could not be installed ($($_.Exception.Message)). Parse check still runs." }
+          }
           $bad = 0
           Get-ChildItem scripts/powershell -Filter *.ps1 | ForEach-Object {
             $t = $null; $e = $null
             [void][System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$t, [ref]$e)
             if ($e.Count) { $bad++; $e | ForEach-Object { Write-Error "$($_.Extent.File):$($_.Extent.StartLineNumber) $($_.Message)" } }
           }
-          $issues = Invoke-ScriptAnalyzer -Path scripts/powershell -Severity Error
-          if ($issues) { $issues | Format-Table -AutoSize; $bad++ }
+          if ($haveAnalyzer) {
+            $issues = Invoke-ScriptAnalyzer -Path scripts/powershell -Severity Error
+            if ($issues) { $issues | Format-Table -AutoSize; $bad++ }
+          }
           if ($bad) { exit 1 }
 
   repo-checks:
