@@ -1,5 +1,7 @@
 # genesys-health-style-lab
 
+  [![ci](https://github.com/asvinluan/genesys-health-style-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/asvinluan/genesys-health-style-lab/actions/workflows/ci.yml)
+
 A design-and-code study of a public-sector health-service contact centre, built on **Genesys Cloud CX** as Terraform ("CX as Code"). It covers AI guardrails, a restricted division, separation of duties, quality management, recording retention, workforce management and a governance pack, with documentation written for review.
 
 It is the Genesys counterpart to my [AWS enterprise bank lab](https://github.com/asvinluan/aws-enterprise-bank-lab), and a sibling of [genesys-home-affairs-style-lab](https://github.com/asvinluan/genesys-home-affairs-style-lab): the same modules, a different design file.
