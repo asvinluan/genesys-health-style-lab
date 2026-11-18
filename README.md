@@ -72,6 +72,7 @@ To build in a **lab** org, follow [docs/BUILD-MANUAL.md](docs/BUILD-MANUAL.md) a
 | [BUILD-MANUAL](docs/BUILD-MANUAL.md) | How to build it, step by step |
 | [RUNBOOK-POWERSHELL](docs/RUNBOOK-POWERSHELL.md) / [RUNBOOK-BASH](docs/RUNBOOK-BASH.md) | Exact commands |
 | [OPERATIONS-AND-ON-CALL](docs/OPERATIONS-AND-ON-CALL.md) | Daily routine, severity, incidents, RCA, change, knowledge |
+| [L1-L2-SUPPORT-PLAYBOOK](docs/L1-L2-SUPPORT-PLAYBOOK.md) | Level 1 and 2 ticket scenarios, user administration, change-window checklist, practice ticket |
 | [COST-AND-CLEANUP](docs/COST-AND-CLEANUP.md) | Where cost hides, how to clean up |
 | [governance/](governance/) | AI register entry, impact assessment outline, statement notes, compliance map |
 

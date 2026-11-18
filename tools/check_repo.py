@@ -19,13 +19,19 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 TEXT_SUFFIXES = {".tf", ".tfvars", ".yaml", ".yml", ".md", ".sh", ".ps1", ".js", ".json", ".example", ".txt"}
-SKIP_DIRS = {".git", ".terraform", "node_modules", "generated", "export"}
+SKIP_DIRS = {".git", ".terraform", "node_modules", "generated", "export", ".venv", "venv"}
 problems = []
 
 
 def files():
     for p in ROOT.rglob("*"):
-        if p.is_file() and not (set(p.relative_to(ROOT).parts) & SKIP_DIRS) and (p.suffix in TEXT_SUFFIXES or p.name.startswith(".git")):
+        if set(p.relative_to(ROOT).parts) & SKIP_DIRS:
+            continue
+        try:
+            is_file = p.is_file()
+        except OSError:
+            continue
+        if is_file and (p.suffix in TEXT_SUFFIXES or p.name.startswith(".git")):
             yield p
 
 
